@@ -34,7 +34,7 @@ If ID =
 
 If ID < 469775 ;First ID in which the name pattern can be used.
 {
-	MsgBox, 48, Error, No support for ID's less than 469775.`nThe known pattern can't be used.
+	MsgBox, 48, Error, No support for ID's smaller than 469775.`nThe known pattern can't be used.
 	Return
 }
 
