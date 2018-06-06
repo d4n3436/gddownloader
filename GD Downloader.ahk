@@ -1,4 +1,4 @@
-﻿;Geometry Dash Downloader 1.0.6 (English) - A script that allows you to download banned songs from Newgrounds.
+﻿;Geometry Dash Downloader 1.0.6 - A script that allows you to download banned songs from Newgrounds.
 ;By Dan3436
 
 ;Parameters
