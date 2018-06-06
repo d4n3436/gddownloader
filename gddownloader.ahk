@@ -140,8 +140,8 @@ DownloadFile(Url, File) { ;Based on the function of Bruttosozialprodukt - https:
 	Progress, MH80,, Wait..., % Url
 	SetTimer, ProgressBar, 100
 	UrlDownloadToFile, % Url, % File
-     Progress, Off
-     SetTimer, ProgressBar, Off
+	Progress, Off
+	SetTimer, ProgressBar, Off
 	Return
 	
 	ProgressBar:
