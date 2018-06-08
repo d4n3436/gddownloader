@@ -63,8 +63,8 @@ If Name =
 }
 
 Filter := {" ": "-", "&": "amp", "<": "lt", ">": "gt"} ;Literal quotes can't be used in the array.
-For Primero, Ultimo in Filter
-Nombre := SubStr(RegExReplace(StrReplace(StrReplace(Nombre, Primero, Ultimo), """", "quot"), "[^\w-_]"), 1, 26)
+For First, Last in Filter
+Name := SubStr(RegExReplace(StrReplace(StrReplace(Name, First, Last), """", "quot"), "[^\w-_]"), 1, 26)
 
 /*
 Filter:
