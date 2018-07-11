@@ -1,21 +1,19 @@
-﻿;Geometry Dash Downloader 1.0.6 - A script for downloading Newgrounds banned songs.
-;By Dan3436
+;Geometry Dash Downloader 1.0.65
 
 ;Parameters
 #NoEnv
 #SingleInstance Force
 #NoTrayIcon
-SetBatchLines -1
 
 Title := "GD Downloader"
 
 If A_OSVersion in WIN_XP
-Defpath := "C:\Documents and Settings\" A_UserName "\Application Data\GeometryDash"
-Defpath := "C:\Users\" A_UserName "\AppData\Local\GeometryDash"
+GDPath := "C:\Documents and Settings\" A_UserName "\Application Data\GeometryDash"
+GDPath := "C:\Users\" A_UserName "\AppData\Local\GeometryDash"
 
 Gui -MinimizeBox
 Gui Color, White
-Gui Add, Text, x50 y6 w65 h23 0x200, Enter the ID
+Gui Add, Text, x51 y14 w65 h14, Enter the ID
 Gui Add, Edit, vID x50 y34 w65 h21 Number -VScroll
 Gui Add, Text, x0 y61 w257 h40 -Background
 Gui Add, Button, gID x75 y70 w80 h23 Default, Accept
@@ -34,7 +32,7 @@ If ID =
 
 If ID < 469775 ;First ID in which the name pattern can be used.
 {
-	MsgBox, 48, Error, No support for ID's smaller than 469775.`nThe known pattern can't be used.
+	MsgBox, 48, Error, No support for ID's less than 469775.`nThe known pattern can't be used.
 	Return
 }
 
@@ -62,9 +60,10 @@ If Name =
 	Return
 }
 
-Filter := {" ": "-", "&": "amp", "<": "lt", ">": "gt"} ;Literal quotes can't be used in the array.
-For First, Last in Filter
-Name := SubStr(RegExReplace(StrReplace(StrReplace(Name, First, Last), """", "quot"), "[^\w-_]"), 1, 26)
+Filter := {" ": "-", "&": "amp", "<": "lt", ">": "gt", """": "quot"}
+For Key, Value in Filter
+Name := StrReplace(Name, Key, Value) ;Apply the filter only here.
+Name := SubStr(RegExReplace(Name, "[^\w-_]"), 1, 26)
 
 /*
 Filter:
@@ -95,27 +94,36 @@ Gui Show, w284 h101, %Title%
 Return
 
 Path1:
-Defpath := Defpath "\" ID ".mp3"
+SavePath := GDPath "\" ID ".mp3"
 Goto Download
 
 Path2:
 Gui +OwnDialogs
-FileSelectFolder, Path,, 0, Select the folder where resides Geometry Dash
+FileSelectFolder, AltPath,, 0, Select the Geometry Dash folder
+
 If ErrorLevel
 Return
-Defpath = Path "\Resources\" ID ".mp3"
+
+If !FileExist(RutaAlt "\Resources")
+{
+	MsgBox, 48, %Titulo%, "Resources" folder wasn't found.
+	Return
+}
+
+SavePath = AltPath "\Resources\" ID ".mp3"
 Goto Download
 
 Help:
 Gui +OwnDialogs
-MsgBox, 64, Help, Normal path: %Defpath%`n`nAlternative path: Geometry Dash folder\Resources
+MsgBox, 64, Help, Normal path: %GDPath%`n`nAlternative path: Geometry Dash folder\Resources
 Return
 
 Download:
 Gui Destroy
 
-try DownloadFile("http://audio.ngfiles.com/" ID - Mod(ID, 1000) "/" ID "_" Name ".mp3", Defpath)
-catch e {
+try DownloadFile("http://audio.ngfiles.com/" ID - Mod(ID, 1000) "/" ID "_" Name ".mp3", SavePath)
+
+catch e { ;Error
 	
 	If InStr(e.Message, "0x80072F76")
 		MsgBox, 48, Error, The audio was not found.`nBe sure to write the name and ID correctly.
@@ -123,13 +131,15 @@ catch e {
 	If InStr(e.Message, "0x80072EE7")
 		MsgBox, 48, Error, The server name could not be resolved. Make sure you have an internet connection.
 	
-	If FileExist(Defpath)
-		FileDelete % Defpath
+	If e.Message not contains 0x80072EE7,0x80072F76
+		MsgBox % e.Message
+	
+	FileDelete % SavePath
 	
 	ExitApp
 }
 
-MsgBox, 64, %Title%, Audio downloaded successfully.
+MsgBox, 64, %Title%, The audio was downloaded successfully.
 ExitApp
 
 DownloadFile(Url, File) { ;Based on the function of Bruttosozialprodukt - https://autohotkey.com/boards/viewtopic.php?f=6&t=1674
@@ -140,8 +150,8 @@ DownloadFile(Url, File) { ;Based on the function of Bruttosozialprodukt - https:
 	Progress, MH80,, Wait..., % Url
 	SetTimer, ProgressBar, 100
 	UrlDownloadToFile, % Url, % File
-	Progress, Off
-	SetTimer, ProgressBar, Off
+     Progress, Off
+     SetTimer, ProgressBar, Off
 	Return
 	
 	ProgressBar:
