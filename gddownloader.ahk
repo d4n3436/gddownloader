@@ -1,4 +1,5 @@
 ;Geometry Dash Downloader 1.0.65
+;By Dan3436
 
 ;Parameters
 #NoEnv
