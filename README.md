@@ -8,3 +8,5 @@ This pattern only works from ID No. 469775 onwards.
 After entering the ID and the name of the audio, the download will start and the audio will be saved in the selected path.
 
 Written in AutoHotkey.
+
+[Español?](URL "https://github.com/Dan3436/gddownloader/tree/espa%C3%B1ol")
