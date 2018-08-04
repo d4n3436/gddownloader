@@ -9,4 +9,4 @@ After entering the ID and the name of the audio, the download will start and the
 
 Written in AutoHotkey.
 
-[Español?](URL "https://github.com/Dan3436/gddownloader/tree/espa%C3%B1ol")
+[Español?](https://github.com/Dan3436/gddownloader/tree/español)
