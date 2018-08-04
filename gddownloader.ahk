@@ -105,13 +105,13 @@ FileSelectFolder, AltPath,, 0, Select the Geometry Dash folder
 If ErrorLevel
 Return
 
-If !FileExist(RutaAlt "\Resources")
+If !FileExist(AltPath "\Resources")
 {
-	MsgBox, 48, %Titulo%, "Resources" folder wasn't found.
+	MsgBox, 48, %Title%, "Resources" folder wasn't found.
 	Return
 }
 
-SavePath = AltPath "\Resources\" ID ".mp3"
+SavePath := AltPath "\Resources\" ID ".mp3"
 Goto Download
 
 Help:
