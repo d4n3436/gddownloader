@@ -1,4 +1,4 @@
-# Geometry Dash Downloader ![AutoHotkey](https://img.shields.io/badge/Language-Autohotkey-green.svg)
+# Geometry Dash Downloader ![AutoHotkey](https://img.shields.io/badge/Language-AutoHotkey-green.svg)
 **Geometry Dash Downloader** - A script for downloading Newgrounds banned songs.
 
 This is possible due to a known pattern in the audio link:
